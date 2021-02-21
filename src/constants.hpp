@@ -2,15 +2,21 @@
 
 #pragma once
 
-const uint8_t LEDBrightness = 64;
+#include "fastledrgbw.hpp"
+
+const uint8_t LEDBrightness = 255;
 
 // For RGB LEDs
 const uint8_t PinRGBLEDs = 6;
 const uint8_t RGBLEDCount = 26;
+const bool CorrectRGB = true; // correction below only applied if true
+const CRGB RGBLEDCorrection = CRGB(255, 178, 178);
 
 // For RGBW LEDs
 const uint8_t PinRGBWLEDs = 13;
 const uint8_t RGBWLEDCount = 150;
+const bool CorrectRGBW = false; // correction below only applied if true
+const RGBW RGBWLEDCorrection = RGBW(255, 220, 255, 255);
 
 const uint32_t SerialSpeed = 115200;
 const uint16_t SerialTimeout = 150; // Seconds

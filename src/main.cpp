@@ -48,17 +48,33 @@ void dataMode() {
   bytesRemaining--;
 
   if (bytesRemaining == 0) {
-    for (uint8_t i = 0; i < RGBLEDCount && i < RGBWLEDCount; i++) {
+    if (CorrectRGB) {
+      for (uint8_t i = 0; i < RGBLEDCount; i++) {
+        rgbLEDs[i].r = scale8(rgbLEDs[i].r, RGBLEDCorrection.r);
+        rgbLEDs[i].g = scale8(rgbLEDs[i].g, RGBLEDCorrection.g);
+        rgbLEDs[i].b = scale8(rgbLEDs[i].b, RGBLEDCorrection.b);
+      }
+    }
+
+    for (uint8_t i = 0; i < RGBWLEDCount; i++) {
+      // Scale to fit the RGBW led array
+      uint8_t i2 = (uint16_t)i * (uint16_t)RGBLEDCount / (uint16_t)RGBWLEDCount;
 
       // RGB to RGBW conversion
-      uint8_t r = rgbLEDs[i].r;
-      uint8_t g = rgbLEDs[i].g;
-      uint8_t b = rgbLEDs[i].b;
+      uint8_t r = rgbLEDs[i2].r;
+      uint8_t g = rgbLEDs[i2].g;
+      uint8_t b = rgbLEDs[i2].b;
       uint8_t min = r < g ? (r < b ? r : b) : (g < b ? g : b);
       min = scale8(min, min);
       r -= min;
       g -= min;
       b -= min;
+      if (CorrectRGBW) {
+        r = scale8(r, RGBWLEDCorrection.r);
+        g = scale8(g, RGBWLEDCorrection.g);
+        b = scale8(b, RGBWLEDCorrection.b);
+        min = scale8(min, RGBWLEDCorrection.w);
+      }
       rgbwLEDs[i] = RGBW(r, g, b, min);
     }
 
