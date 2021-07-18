@@ -48,14 +48,6 @@ void dataMode() {
   bytesRemaining--;
 
   if (bytesRemaining == 0) {
-    if (CorrectRGB) {
-      for (uint8_t i = 0; i < RGBLEDCount; i++) {
-        rgbLEDs[i].r = scale8(rgbLEDs[i].r, RGBLEDCorrection.r);
-        rgbLEDs[i].g = scale8(rgbLEDs[i].g, RGBLEDCorrection.g);
-        rgbLEDs[i].b = scale8(rgbLEDs[i].b, RGBLEDCorrection.b);
-      }
-    }
-
     for (uint8_t i = 0; i < RGBWLEDCount; i++) {
       // Scale to fit the RGBW led array
       uint8_t i2 = (uint16_t)i * (uint16_t)RGBLEDCount / (uint16_t)RGBWLEDCount;
@@ -76,6 +68,14 @@ void dataMode() {
         min = scale8(min, RGBWLEDCorrection.w);
       }
       rgbwLEDs[i] = RGBW(r, g, b, min);
+    }
+
+    if (CorrectRGB) {
+      for (uint8_t i = 0; i < RGBLEDCount; i++) {
+        rgbLEDs[i].r = scale8(rgbLEDs[i].r, RGBLEDCorrection.r);
+        rgbLEDs[i].g = scale8(rgbLEDs[i].g, RGBLEDCorrection.g);
+        rgbLEDs[i].b = scale8(rgbLEDs[i].b, RGBLEDCorrection.b);
+      }
     }
 
     FastLED.show();

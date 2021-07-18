@@ -8,8 +8,8 @@ const uint8_t LEDBrightness = 255;
 
 // For RGB LEDs
 const uint8_t PinRGBLEDs = 6;
-const uint8_t RGBLEDCount = 26;
-const bool CorrectRGB = true; // correction below only applied if true
+const uint8_t RGBLEDCount = 34;
+const bool CorrectRGB = false; // correction below only applied if true
 const CRGB RGBLEDCorrection = CRGB(255, 178, 178);
 
 // For RGBW LEDs
